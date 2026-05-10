@@ -10,8 +10,6 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions)
-  if (!session) redirect('/admin/login')
 
   return (
     <div className="flex min-h-screen bg-[#F0F2F5]">

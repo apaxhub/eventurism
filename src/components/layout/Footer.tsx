@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, Mail, MapPin } from 'lucide-react'
 
 const FacebookIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -18,12 +19,12 @@ const links = {
     { href: '/gallery', label: 'Gallery' },
     { href: '/contact', label: 'Contact' },
   ],
-  services: [
-    { href: '/tours', label: 'Tour Packages' },
+  tours: [
+    { href: '/tours', label: 'All Packages' },
     { href: '/tours?category=Hill+Station', label: 'Hill Stations' },
     { href: '/tours?category=Beach', label: 'Beach Holidays' },
     { href: '/tours?category=Heritage', label: 'Heritage Tours' },
-    { href: '/contact', label: 'Corporate Events' },
+    { href: '/tours?category=Adventure', label: 'Adventure Trips' },
     { href: '/contact', label: 'Custom Packages' },
   ],
 }
@@ -35,20 +36,23 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-display font-bold text-sm">E</span>
-              </div>
-              <span className="font-display font-bold text-xl">Eventurism</span>
+            <div className="mb-4">
+              <Image
+                src="/logo.png"
+                alt="Eventurism Logo"
+                width={160}
+                height={48}
+                className="h-10 w-auto object-contain"
+              />
             </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Chennai&apos;s trusted event &amp; tour management company since 2011. Creating memories across Tamil Nadu and beyond.
+            <p className="text-white/60 text-sm leading-relaxed mb-4 font-sans">
+              Chennai&apos;s trusted tour operator since 2011. Creating unforgettable holiday experiences across India.
             </p>
             <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center gap-0.5">
                 {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-xs">★</span>)}
               </div>
-              <span className="text-sm font-mono text-neutral">4.8 · 212 Reviews</span>
+              <span className="text-sm font-sans text-neutral">4.8 · 212 Reviews</span>
             </div>
             <div className="flex items-center gap-3">
               <a href="https://facebook.com/eventurisms" className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center hover:bg-primary transition-colors" aria-label="Facebook">
@@ -69,19 +73,19 @@ export function Footer() {
             <ul className="flex flex-col gap-2.5">
               {links.company.map(l => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-white/60 hover:text-white transition-colors">{l.label}</Link>
+                  <Link href={l.href} className="text-sm font-sans text-white/60 hover:text-white transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Tours */}
           <div>
-            <h4 className="font-display font-semibold text-base mb-4 text-neutral">Services</h4>
+            <h4 className="font-display font-semibold text-base mb-4 text-neutral">Tour Packages</h4>
             <ul className="flex flex-col gap-2.5">
-              {links.services.map(l => (
+              {links.tours.map(l => (
                 <li key={l.label}>
-                  <Link href={l.href} className="text-sm text-white/60 hover:text-white transition-colors">{l.label}</Link>
+                  <Link href={l.href} className="text-sm font-sans text-white/60 hover:text-white transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -92,25 +96,25 @@ export function Footer() {
             <h4 className="font-display font-semibold text-base mb-4 text-neutral">Contact</h4>
             <ul className="flex flex-col gap-3">
               <li>
-                <a href="tel:+917449229229" className="flex items-start gap-2.5 text-sm text-white/60 hover:text-white transition-colors">
+                <a href="tel:+917449229229" className="flex items-start gap-2.5 text-sm font-sans text-white/60 hover:text-white transition-colors">
                   <Phone className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   +91-7449229229
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/917449229229" className="flex items-start gap-2.5 text-sm text-white/60 hover:text-white transition-colors">
-                  <MessageCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+                <a href="https://wa.me/917449229229" className="flex items-start gap-2.5 text-sm font-sans text-white/60 hover:text-white transition-colors">
+                  <Image src="/whatsapp_logo.png" alt="WhatsApp" width={16} height={16} className="w-4 h-4 object-contain mt-0.5 shrink-0" />
                   WhatsApp
                 </a>
               </li>
               <li>
-                <a href="mailto:eventurisms@gmail.com" className="flex items-start gap-2.5 text-sm text-white/60 hover:text-white transition-colors">
+                <a href="mailto:eventurisms@gmail.com" className="flex items-start gap-2.5 text-sm font-sans text-white/60 hover:text-white transition-colors">
                   <Mail className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   eventurisms@gmail.com
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-2.5 text-sm text-white/60">
+                <div className="flex items-start gap-2.5 text-sm font-sans text-white/60">
                   <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   Arumbakkam, Chennai – 600106, Tamil Nadu
                 </div>
@@ -120,11 +124,11 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/40 font-mono">© 2025 Eventurism. All rights reserved.</p>
+          <p className="text-sm font-sans text-white/40">© 2025 Eventurism. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs text-white/40 hover:text-white/60 transition-colors">Privacy Policy</Link>
+            <Link href="/privacy" className="text-xs font-sans text-white/40 hover:text-white/60 transition-colors">Privacy Policy</Link>
             <span className="text-white/20">|</span>
-            <span className="text-xs text-white/40 font-mono">Made with ♥ in Chennai</span>
+            <span className="text-xs font-sans text-white/40">Made with ♥ in Chennai</span>
           </div>
         </div>
       </div>

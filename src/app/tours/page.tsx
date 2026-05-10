@@ -1,6 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { PackageCard } from '@/components/ui/PackageCard'
 import { CTABanner } from '@/components/sections/CTABanner'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { Button } from '@/components/ui/Button'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -25,7 +28,8 @@ const categories = ['All', 'Hill Station', 'Beach', 'Nature', 'Heritage']
 
 export default async function ToursPage({ searchParams }: { searchParams: { category?: string } }) {
   const activeCategory = searchParams.category || 'All'
-  const packages = await getPackages(activeCategory === 'All' ? undefined : activeCategory)
+  // const packages = await getPackages(activeCategory === 'All' ? undefined : activeCategory)
+  const packages = [];
 
   return (
     <>
@@ -34,14 +38,16 @@ export default async function ToursPage({ searchParams }: { searchParams: { cate
         <div className="absolute inset-0 opacity-20">
           <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80" alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="font-mono text-xs tracking-widest text-primary uppercase">Our Packages</span>
-          <h1 className="font-display font-bold text-5xl lg:text-6xl text-white mt-3 mb-4">
-            Journeys Crafted for<br /><span className="text-primary italic">Every Traveller</span>
-          </h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
-            From quick weekend escapes to extended family holidays — we have a package for every kind of journey.
-          </p>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <AnimatedSection>
+            <span className="font-sans text-xs tracking-widest text-primary uppercase font-medium">Our Packages</span>
+            <h1 className="font-display font-bold text-5xl lg:text-6xl text-white mt-3 mb-4">
+              Journeys Crafted for<br /><em className="text-primary not-italic">Every Traveller</em>
+            </h1>
+            <p className=" text-white/70 text-lg max-w-xl mx-auto">
+              From quick weekend escapes to extended family holidays — we have a package for every kind of journey.
+            </p>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -71,12 +77,12 @@ export default async function ToursPage({ searchParams }: { searchParams: { cate
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {packages.length === 0 ? (
             <div className="text-center py-24">
-              <p className="text-gray-400 font-mono text-sm">No packages found in this category.</p>
-              <a href="/tours" className="mt-4 inline-block text-primary text-sm hover:underline">View all packages</a>
+              <p className="font-sans text-gray-400 text-sm">No packages found in this category.</p>
+              <a href="/tours" className="mt-4 inline-block font-sans text-primary text-sm hover:underline">View all packages</a>
             </div>
           ) : (
             <>
-              <p className="text-sm text-gray-400 font-mono mb-6">{packages.length} package{packages.length !== 1 ? 's' : ''} found</p>
+              <p className="font-sans text-sm text-gray-400 mb-6">{packages.length} package{packages.length !== 1 ? 's' : ''} found</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {packages.map(pkg => (
                   <PackageCard key={pkg.id} {...pkg} id={pkg.id} />
@@ -90,13 +96,15 @@ export default async function ToursPage({ searchParams }: { searchParams: { cate
       {/* Custom Package CTA */}
       <section className="py-16 bg-ivory-dark">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="font-display font-bold text-3xl text-secondary mb-3">
-            Can&apos;t Find Your Dream Package?
-          </h2>
-          <p className="text-gray-500 mb-6">We build 100% custom itineraries. Just tell us where you want to go.</p>
-          <a href="/contact" className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-primary-dark transition-colors">
-            Request Custom Package
-          </a>
+          <AnimatedSection>
+            <h2 className="font-display font-bold text-3xl text-secondary mb-3">
+              Can&apos;t Find Your Dream Package?
+            </h2>
+            <p className="font-sans text-gray-500 mb-6">We build 100% custom itineraries. Just tell us where you want to go.</p>
+            <Link href="/contact">
+              <Button size="lg">Request Custom Package</Button>
+            </Link>
+          </AnimatedSection>
         </div>
       </section>
 

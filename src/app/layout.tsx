@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   description:
     "Chennai's leading event management and tour operator since 2011. Rated 4.8★ with 212 Justdial reviews. Corporate events, team outings, holiday packages, hotel & flight bookings.",
-  keywords: ['event management Chennai','tour packages Chennai','travel agency Tamil Nadu'],
+  keywords: ['event management Chennai', 'tour packages Chennai', 'travel agency Tamil Nadu'],
   openGraph: {
     title: 'Eventurism — Event Management & Tour Packages in Chennai',
     description: "Chennai's #1 event & tour management company. 4.8★ rated.",

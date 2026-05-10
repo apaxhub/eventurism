@@ -1,9 +1,12 @@
 'use client'
 import { useState } from 'react'
-import { Phone, Mail, MapPin, MessageCircle, Clock, CheckCircle } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, Mail, MapPin, Clock, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select, Textarea } from '@/components/ui/FormFields'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import type { Metadata } from 'next'
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: 'General', message: '' })
@@ -47,12 +50,14 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="pt-32 pb-16 bg-secondary">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="font-mono text-xs tracking-widest text-primary uppercase">Get In Touch</span>
-          <h1 className="font-display font-bold text-5xl lg:text-6xl text-white mt-3 mb-4">
-            Let&apos;s Build Something<br />
-            <span className="text-primary italic">Together</span>
-          </h1>
-          <p className="text-white/70 text-lg">Whether it&apos;s a question or a full project brief — we&apos;re ready.</p>
+          <AnimatedSection>
+            <span className="font-sans text-xs tracking-widest text-primary uppercase font-medium">Plan Your Holiday</span>
+            <h1 className="font-display font-bold text-5xl lg:text-6xl text-white mt-3 mb-4">
+              Let&apos;s Plan Your<br />
+              <span className="text-primary not-italic">Dream Trip Together</span>
+            </h1>
+            <p className="font-sans text-white/70 text-lg">Share your travel ideas — we&apos;ll take care of the rest.</p>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -61,22 +66,26 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
 
             {/* Contact Info */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
+            <AnimatedSection className="lg:col-span-2 flex flex-col gap-6" direction="left">
               <div>
                 <h2 className="font-display font-bold text-2xl text-secondary mb-6">Contact Details</h2>
                 <div className="flex flex-col gap-4">
                   {[
-                    { icon: Phone, label: 'Phone', value: '+91-7449229229', href: 'tel:+917449229229', color: 'text-primary' },
-                    { icon: MessageCircle, label: 'WhatsApp', value: 'Chat with us directly', href: 'https://wa.me/917449229229', color: 'text-green-500' },
-                    { icon: Mail, label: 'Email', value: 'eventurisms@gmail.com', href: 'mailto:eventurisms@gmail.com', color: 'text-primary' },
-                  ].map(({ icon: Icon, label, value, href, color }) => (
+                    { icon: Phone, label: 'Phone', value: '+91-7449229229', href: 'tel:+917449229229', isWhatsApp: false },
+                    { icon: null, label: 'WhatsApp', value: 'Chat with us directly', href: 'https://wa.me/917449229229', isWhatsApp: true },
+                    { icon: Mail, label: 'Email', value: 'eventurisms@gmail.com', href: 'mailto:eventurisms@gmail.com', isWhatsApp: false },
+                  ].map(({ icon: Icon, label, value, href, isWhatsApp }) => (
                     <a key={label} href={href} className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-border/50 hover:border-primary hover:shadow-lg transition-all group">
-                      <div className={`w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors`}>
-                        <Icon className={`w-5 h-5 ${color} group-hover:text-white transition-colors`} />
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors">
+                        {isWhatsApp ? (
+                          <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain group-hover:brightness-0 group-hover:invert transition-all" />
+                        ) : Icon ? (
+                          <Icon className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                        ) : null}
                       </div>
                       <div>
-                        <div className="text-xs font-mono text-gray-400">{label}</div>
-                        <div className="text-sm font-medium text-secondary">{value}</div>
+                        <div className="font-sans text-xs text-gray-400">{label}</div>
+                        <div className="font-sans text-sm font-medium text-secondary">{value}</div>
                       </div>
                     </a>
                   ))}
@@ -85,8 +94,8 @@ export default function ContactPage() {
                       <MapPin className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <div className="text-xs font-mono text-gray-400">Address</div>
-                      <div className="text-sm font-medium text-secondary">No 43, Nevethitha Apt, Jaganathan Nagar, Arumbakkam, Chennai – 600106</div>
+                      <div className="font-sans text-xs text-gray-400">Address</div>
+                      <div className="font-sans text-sm font-medium text-secondary">No 43, Nevethitha Apt, Jaganathan Nagar, Arumbakkam, Chennai – 600106</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-border/50">
@@ -94,8 +103,8 @@ export default function ContactPage() {
                       <Clock className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <div className="text-xs font-mono text-gray-400">Business Hours</div>
-                      <div className="text-sm font-medium text-secondary">Mon – Sat, 9:00 AM – 7:00 PM IST</div>
+                      <div className="font-sans text-xs text-gray-400">Business Hours</div>
+                      <div className="font-sans text-sm font-medium text-secondary">Mon – Sat, 9:00 AM – 7:00 PM IST</div>
                     </div>
                   </div>
                 </div>
@@ -105,19 +114,19 @@ export default function ContactPage() {
               <div className="grid grid-cols-2 gap-3">
                 <a href="tel:+917449229229" className="p-4 bg-secondary text-white rounded-2xl text-center hover:bg-secondary/90 transition-colors">
                   <Phone className="w-5 h-5 text-primary mx-auto mb-2" />
-                  <div className="text-sm font-medium">Call Us</div>
-                  <div className="text-xs text-white/50 font-mono mt-1">Instant</div>
+                  <div className="font-sans text-sm font-medium">Call Us</div>
+                  <div className="font-sans text-xs text-white/50 mt-1">Instant</div>
                 </a>
                 <a href="https://wa.me/917449229229" className="p-4 bg-secondary text-white rounded-2xl text-center hover:bg-secondary/90 transition-colors">
-                  <MessageCircle className="w-5 h-5 text-green-400 mx-auto mb-2" />
-                  <div className="text-sm font-medium">WhatsApp</div>
-                  <div className="text-xs text-white/50 font-mono mt-1">Quick reply</div>
+                  <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain mx-auto mb-2" />
+                  <div className="font-sans text-sm font-medium">WhatsApp</div>
+                  <div className="font-sans text-xs text-white/50 mt-1">Quick reply</div>
                 </a>
               </div>
-            </div>
+            </AnimatedSection>
 
             {/* Form */}
-            <div className="lg:col-span-3">
+            <AnimatedSection className="lg:col-span-3" direction="right" delay={0.15}>
               <div className="bg-white rounded-2xl border border-border/50 p-8 shadow-xl shadow-secondary/5">
                 <h2 className="font-display font-bold text-2xl text-secondary mb-6">Send an Enquiry</h2>
 
@@ -127,8 +136,8 @@ export default function ContactPage() {
                       <CheckCircle className="w-8 h-8 text-green-500" />
                     </div>
                     <h3 className="font-display font-bold text-xl text-secondary mb-2">Enquiry Sent!</h3>
-                    <p className="text-gray-500 mb-6">We&apos;ll get back to you within 2–4 hours. Check your WhatsApp too!</p>
-                    <button onClick={() => setSuccess(false)} className="text-primary text-sm hover:underline">Send another enquiry</button>
+                    <p className="font-sans text-gray-500 mb-6">We&apos;ll get back to you within 2–4 hours. Check your WhatsApp too!</p>
+                    <button onClick={() => setSuccess(false)} className="font-sans text-primary text-sm hover:underline">Send another enquiry</button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -140,27 +149,29 @@ export default function ContactPage() {
                     <Select id="service" name="service" label="I'm interested in" value={form.service} onChange={handleChange}>
                       <option value="General">General Enquiry</option>
                       <option value="Tour Package">Tour Package</option>
-                      <option value="Corporate Event">Corporate Event</option>
-                      <option value="Team Building">Team Building Outing</option>
+                      <option value="Hill Station">Hill Station Tour</option>
+                      <option value="Beach Holiday">Beach Holiday</option>
+                      <option value="Heritage Tour">Heritage Tour</option>
                       <option value="Family Tour">Family Tour</option>
+                      <option value="Honeymoon Package">Honeymoon Package</option>
                       <option value="Custom Package">Custom Package</option>
                       <option value="Hotel Booking">Hotel Booking</option>
                       <option value="Flight Booking">Flight Booking</option>
                     </Select>
-                    <Textarea id="message" name="message" label="Your Message *" placeholder="Tell us about your trip or event — destination, dates, group size, budget..." rows={4} value={form.message} onChange={handleChange} required />
+                    <Textarea id="message" name="message" label="Your Message *" placeholder="Tell us about your dream trip — destination, dates, group size, budget..." rows={4} value={form.message} onChange={handleChange} required />
 
                     {error && (
-                      <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">{error}</div>
+                      <div className="bg-red-50 border border-red-200 text-red-600 font-sans text-sm rounded-xl px-4 py-3">{error}</div>
                     )}
 
                     <Button type="submit" size="lg" loading={loading} className="w-full">
                       Send Enquiry
                     </Button>
-                    <p className="text-xs text-gray-400 text-center font-mono">We typically respond within 2–4 hours during business hours.</p>
+                    <p className="font-sans text-xs text-gray-400 text-center">We typically respond within 2–4 hours during business hours.</p>
                   </form>
                 )}
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -175,7 +186,7 @@ export default function ContactPage() {
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Eventurism location"
+          title="Eventurism location - Arumbakkam Chennai"
         />
       </section>
     </>

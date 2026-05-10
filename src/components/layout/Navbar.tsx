@@ -1,9 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Menu, X, Phone, MessageCircle } from 'lucide-react'
+import { Menu, X, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 const navLinks = [
@@ -40,11 +41,15 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-display font-bold text-sm">E</span>
-              </div>
-              <span className="font-display font-bold text-xl text-white">Eventurism</span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Eventurism Logo"
+                width={160}
+                height={48}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Links */}
@@ -54,7 +59,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'text-sm font-medium transition-colors',
+                    'text-sm font-medium font-sans transition-colors',
                     pathname === link.href
                       ? 'text-primary'
                       : 'text-white/80 hover:text-white'
@@ -67,9 +72,9 @@ export function Navbar() {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a href="tel:+917449229229" className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors">
+              <a href="tel:+917449229229" className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors font-sans">
                 <Phone className="w-3.5 h-3.5" />
-                <span className="font-mono text-xs">+91-7449229229</span>
+                <span className="text-xs">+91-7449229229</span>
               </a>
               <Link href="/contact"><Button size="sm">Get a Quote</Button></Link>
             </div>
@@ -92,7 +97,7 @@ export function Navbar() {
         open ? 'translate-x-0' : 'translate-x-full'
       )}>
         <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
-          <span className="font-display font-bold text-xl text-white">Eventurism</span>
+          <Image src="/logo.png" alt="Eventurism Logo" width={140} height={40} className="h-9 w-auto object-contain" />
           <button onClick={() => setOpen(false)} className="text-white p-2"><X className="w-6 h-6" /></button>
         </div>
         <div className="flex flex-col p-6 gap-6 flex-1">
@@ -109,11 +114,12 @@ export function Navbar() {
             </Link>
           ))}
           <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-white/10">
-            <a href="tel:+917449229229" className="flex items-center gap-3 text-white/70 text-lg">
+            <a href="tel:+917449229229" className="flex items-center gap-3 text-white/70 text-lg font-sans">
               <Phone className="w-5 h-5 text-primary" /> +91-7449229229
             </a>
-            <a href="https://wa.me/917449229229" className="flex items-center gap-3 text-white/70 text-lg">
-              <MessageCircle className="w-5 h-5 text-green-400" /> WhatsApp Us
+            <a href="https://wa.me/917449229229" className="flex items-center gap-3 text-white/70 text-lg font-sans">
+              <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain" />
+              WhatsApp Us
             </a>
           </div>
         </div>
@@ -124,15 +130,15 @@ export function Navbar() {
         <div className="grid grid-cols-3 divide-x divide-white/10">
           <a href="tel:+917449229229" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
             <Phone className="w-5 h-5 text-primary" />
-            <span className="text-xs font-mono">Call</span>
+            <span className="text-xs font-sans">Call</span>
           </a>
           <a href="https://wa.me/917449229229" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
-            <MessageCircle className="w-5 h-5 text-green-400" />
-            <span className="text-xs font-mono">WhatsApp</span>
+            <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain" />
+            <span className="text-xs font-sans">WhatsApp</span>
           </a>
           <Link href="/contact" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
             <div className="w-5 h-5 text-neutral flex items-center justify-center">✉</div>
-            <span className="text-xs font-mono">Enquire</span>
+            <span className="text-xs font-sans">Enquire</span>
           </Link>
         </div>
       </div>
