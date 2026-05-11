@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react'
 import { Upload, X, ImageIcon, AlertCircle, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 interface ImageUploaderProps {
   thumbnail: string
@@ -84,7 +85,7 @@ export function ImageUploader({ thumbnail, images, onThumbnailChange, onImagesCh
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
           {allImages.map(({ url, isThumb }, idx) => (
             <div key={url} className="relative group aspect-video rounded-xl overflow-hidden bg-gray-100 border-2 border-border/50">
-              <img src={url} alt={`Image ${idx + 1}`} className="w-full h-full object-cover" />
+              <Image src={url} alt={`Image ${idx + 1}`} fill sizes="(max-width: 768px) 33vw, 20vw" className="object-cover" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
               {isThumb && (
                 <div className="absolute top-1 left-1 bg-primary text-white rounded-md px-1 py-0.5 flex items-center gap-0.5">

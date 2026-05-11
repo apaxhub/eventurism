@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Plus, Pencil, Eye } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import { Badge } from '@/components/ui/Badge'
@@ -53,9 +54,9 @@ export default async function AdminPackagesPage() {
                   <tr key={pkg.id} className="hover:bg-ivory/30 transition-colors">
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+                        <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-gray-100 relative">
                           {pkg.thumbnail && (
-                            <img src={pkg.thumbnail} alt={pkg.title} className="w-full h-full object-cover" />
+                            <Image src={pkg.thumbnail} alt={pkg.title} fill sizes="48px" className="object-cover" />
                           )}
                         </div>
                         <div>

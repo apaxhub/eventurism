@@ -1,17 +1,17 @@
 'use client'
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Menu, X, Phone } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Menu, X, ArrowRight } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/tours', label: 'Tours' },
-  { href: '/about', label: 'About' },
+  { href: '/tours', label: 'Trips' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -21,127 +21,165 @@ export function Navbar() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setOpen(false) }, [pathname])
+  useEffect(() => { 
+    setOpen(false) 
+    document.body.style.overflow = 'unset'
+  }, [pathname])
 
-  const isHome = pathname === '/'
+  const toggleMenu = () => {
+    if (open) {
+      setOpen(false)
+      document.body.style.overflow = 'unset'
+    } else {
+      setOpen(true)
+      document.body.style.overflow = 'hidden'
+    }
+  }
 
   return (
     <>
       <nav className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled || !isHome
-          ? 'bg-secondary/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        scrolled 
+          ? 'bg-ivory/90 backdrop-blur-xl border-b border-border/40 shadow-[0_4px_30px_-10px_rgba(0,0,0,0.05)] py-3 lg:py-4' 
+          : 'bg-transparent py-5 lg:py-8'
       )}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center justify-between">
+            
             {/* Logo */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="relative z-[60]" onClick={() => setOpen(false)}>
               <Image
                 src="/logo.png"
-                alt="Eventurism Logo"
+                alt="Eventurism"
                 width={160}
                 height={48}
-                className="h-10 w-auto object-contain"
-                priority
+                className={cn(
+                  "w-auto transition-all duration-500 object-contain",
+                  scrolled ? "h-8" : "h-10",
+                )}
               />
             </Link>
 
             {/* Desktop Links */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
               {navLinks.map(link => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'text-sm font-medium font-sans transition-colors',
-                    pathname === link.href
-                      ? 'text-primary'
-                      : 'text-white/80 hover:text-white'
+                    'text-[11px] font-sans uppercase tracking-[0.2em] font-bold transition-colors relative group',
+                    pathname === link.href ? 'text-primary' : 'text-secondary/70 hover:text-secondary'
                   )}
                 >
                   {link.label}
+                  <span className={cn(
+                    "absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300",
+                    pathname === link.href ? "bg-primary opacity-100" : "bg-secondary opacity-0 group-hover:opacity-100"
+                  )} />
                 </Link>
               ))}
             </div>
 
             {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
-              <a href="tel:+917449229229" className="flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors font-sans">
-                <Phone className="w-3.5 h-3.5" />
-                <span className="text-xs">+91-7449229229</span>
-              </a>
-              <Link href="/contact"><Button size="sm">Get a Quote</Button></Link>
+            <div className="hidden lg:flex items-center relative z-[60]">
+              <Link 
+                href="/contact" 
+                className={cn(
+                  "group flex items-center gap-2 px-7 py-3.5 rounded-full font-sans text-[11px] uppercase tracking-widest font-bold transition-all duration-500 shadow-[0_10px_20px_rgba(15,23,42,0.08)] hover:shadow-[0_10px_20px_rgba(249,115,22,0.2)]",
+                  open ? "bg-secondary text-white" : "bg-secondary hover:bg-primary text-white"
+                )}
+              >
+                Plan Your Journey
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+              </Link>
             </div>
 
             {/* Mobile hamburger */}
             <button
-              onClick={() => setOpen(!open)}
-              className="lg:hidden text-white p-2"
+              onClick={toggleMenu}
+              className="lg:hidden relative z-[60] p-2 text-secondary hover:text-primary transition-colors -mr-2"
               aria-label="Toggle menu"
             >
-              {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {open ? <X className="w-7 h-7" strokeWidth={1.5} /> : <Menu className="w-7 h-7" strokeWidth={1.5} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      <div className={cn(
-        'fixed inset-0 z-40 bg-secondary flex flex-col transition-transform duration-300 lg:hidden',
-        open ? 'translate-x-0' : 'translate-x-full'
-      )}>
-        <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
-          <Image src="/logo.png" alt="Eventurism Logo" width={140} height={40} className="h-9 w-auto object-contain" />
-          <button onClick={() => setOpen(false)} className="text-white p-2"><X className="w-6 h-6" /></button>
-        </div>
-        <div className="flex flex-col p-6 gap-6 flex-1">
-          {navLinks.map(link => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'text-2xl font-display font-semibold transition-colors',
-                pathname === link.href ? 'text-primary' : 'text-white/80'
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-white/10">
-            <a href="tel:+917449229229" className="flex items-center gap-3 text-white/70 text-lg font-sans">
-              <Phone className="w-5 h-5 text-primary" /> +91-7449229229
-            </a>
-            <a href="https://wa.me/917449229229" className="flex items-center gap-3 text-white/70 text-lg font-sans">
-              <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain" />
-              WhatsApp Us
-            </a>
-          </div>
-        </div>
-      </div>
+      {/* Fullscreen Mobile Editorial Menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div 
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[55] bg-ivory flex flex-col pt-28 px-6 pb-12 overflow-y-auto"
+          >
+            {/* Background Aesthetic */}
+            <div className="absolute top-0 right-0 w-[80%] h-[50%] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[80%] h-[50%] bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Mobile sticky bottom bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-secondary border-t-2 border-primary">
-        <div className="grid grid-cols-3 divide-x divide-white/10">
-          <a href="tel:+917449229229" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
-            <Phone className="w-5 h-5 text-primary" />
-            <span className="text-xs font-sans">Call</span>
-          </a>
-          <a href="https://wa.me/917449229229" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
-            <Image src="/whatsapp_logo.png" alt="WhatsApp" width={20} height={20} className="w-5 h-5 object-contain" />
-            <span className="text-xs font-sans">WhatsApp</span>
-          </a>
-          <Link href="/contact" className="flex flex-col items-center py-3 gap-1 text-white hover:bg-white/5 transition-colors">
-            <div className="w-5 h-5 text-neutral flex items-center justify-center">✉</div>
-            <span className="text-xs font-sans">Enquire</span>
-          </Link>
-        </div>
-      </div>
+            <div className="relative z-10 flex flex-col h-full">
+              
+              <div className="flex flex-col gap-8 mt-12">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'text-4xl sm:text-5xl font-display font-bold transition-colors inline-block relative group',
+                        pathname === link.href ? 'text-primary' : 'text-secondary hover:text-primary'
+                      )}
+                    >
+                      {link.label}
+                      <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="mt-auto pt-16 flex flex-col gap-8"
+              >
+                <Link 
+                  href="/contact" 
+                  className="group flex items-center justify-between px-8 py-5 rounded-full bg-secondary hover:bg-primary text-white font-sans text-sm uppercase tracking-widest font-bold transition-all duration-300 shadow-xl"
+                >
+                  Plan Your Journey
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                </Link>
+                
+                <div className="flex items-center justify-between border-t border-border/50 pt-6 px-2">
+                   <div className="flex flex-col gap-1">
+                     <span className="font-sans text-[10px] uppercase tracking-widest text-secondary/50 font-bold">Inquiries</span>
+                     <a href="mailto:hello@eventurism.com" className="font-sans text-sm text-secondary font-medium">hello@eventurism.com</a>
+                   </div>
+                   <div className="flex flex-col gap-1 text-right">
+                     <span className="font-sans text-[10px] uppercase tracking-widest text-secondary/50 font-bold">Call Us</span>
+                     <a href="tel:+917449229229" className="font-sans text-sm text-secondary font-medium">+91-7449229229</a>
+                   </div>
+                </div>
+              </motion.div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

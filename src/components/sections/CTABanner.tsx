@@ -8,10 +8,11 @@ export function CTABanner() {
   return (
     <section className="relative py-24 overflow-hidden">
       <div className="absolute inset-0">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920&q=80"
           alt="Beautiful travel destination"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-secondary/85" />
       </div>

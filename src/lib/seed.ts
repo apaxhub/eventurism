@@ -165,7 +165,8 @@ export async function seedDatabase() {
       await prisma.package.upsert({
         where: { slug },
         update: {},
-        create: { ...pkg, slug, itinerary: pkg.itinerary as Record<string, unknown>[] },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        create: { ...pkg, slug, itinerary: pkg.itinerary as any },
       })
     }
 

@@ -6,6 +6,7 @@ import { CTABanner } from '@/components/sections/CTABanner'
 import { Check, X, Clock, Users, MapPin, Phone, MessageCircle } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface PageProps { params: { slug: string } }
 
@@ -35,7 +36,7 @@ export default async function PackagePage({ params }: PageProps) {
     <>
       {/* Hero image */}
       <section className="relative h-[50vh] lg:h-[60vh] overflow-hidden">
-        <img src={pkg.thumbnail} alt={pkg.title} className="w-full h-full object-cover" />
+        <Image src={pkg.thumbnail} alt={pkg.title} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
           <nav className="text-xs font-mono text-white/50 mb-3">
@@ -142,8 +143,8 @@ export default async function PackagePage({ params }: PageProps) {
                 <h2 className="font-display font-bold text-2xl text-secondary mb-4">Gallery</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {allImages.map((img, i) => (
-                    <div key={i} className="aspect-video rounded-xl overflow-hidden">
-                      <img src={img} alt={`${pkg.title} photo ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                    <div key={i} className="relative aspect-video rounded-xl overflow-hidden">
+                      <Image src={img} alt={`${pkg.title} photo ${i + 1}`} fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover hover:scale-105 transition-transform duration-300" />
                     </div>
                   ))}
                 </div>
