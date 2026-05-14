@@ -1,21 +1,48 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, MessageCircle } from 'lucide-react'
 
-const navLinks = [
-  { href: '/destinations', label: 'Destinations' },
-  { href: '/experiences', label: 'Experiences' },
-  { href: '/tours', label: 'Signature Trips' },
-  { href: '/gallery', label: 'The Gallery' },
-  { href: '/about', label: 'Our Philosophy' },
+const indianPackages = [
+  { label: 'Kerala Escapes', href: '/tours?destination=kerala' },
+  { label: 'Kashmir Valleys', href: '/tours?destination=kashmir' },
+  { label: 'Rajasthan Heritage', href: '/tours?destination=rajasthan' },
+  { label: 'Andaman Islands', href: '/tours?destination=andaman' },
+  { label: 'View All Indian', href: '/tours?category=india' }
 ]
 
-const destinationLinks = [
-  { href: '/tours?category=Hill+Station', label: 'Kerala Backwaters' },
-  { href: '/tours?category=Heritage', label: 'Royal Rajasthan' },
-  { href: '/tours?category=Nature', label: 'The Himalayas' },
-  { href: '/tours?category=Beach', label: 'Andaman Islands' },
+const internationalPackages = [
+  { label: 'Bali Retreats', href: '/tours?destination=bali' },
+  { label: 'Maldives Luxury', href: '/tours?destination=maldives' },
+  { label: 'Dubai Experiences', href: '/tours?destination=dubai' },
+  { label: 'Europe Tours', href: '/tours?destination=europe' },
+  { label: 'View All International', href: '/tours?category=international' }
 ]
+
+const companyLinks = [
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact Us' },
+]
+
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+)
+
+const FacebookIcon = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+)
+
+const YoutubeIcon = ({ className }: { className?: string }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+  </svg>
+)
 
 export function Footer() {
   return (
@@ -47,14 +74,17 @@ export function Footer() {
             
             {/* Social Icons */}
             <div className="flex items-center gap-6">
-              <a href="https://instagram.com" className="text-secondary/50 hover:text-primary transition-colors group" aria-label="Instagram">
-                <ArrowRight className="w-5 h-5 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary/60 hover:text-primary hover:border-primary/40 hover:bg-white transition-all duration-300 group" aria-label="Instagram">
+                <InstagramIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </a>
-              <a href="https://facebook.com" className="text-secondary/50 hover:text-primary transition-colors group" aria-label="Facebook">
-                <ArrowRight className="w-5 h-5 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary/60 hover:text-primary hover:border-primary/40 hover:bg-white transition-all duration-300 group" aria-label="Facebook">
+                <FacebookIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </a>
-              <a href="https://youtube.com" className="text-secondary/50 hover:text-primary transition-colors group" aria-label="YouTube">
-                <ArrowRight className="w-5 h-5 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary/60 hover:text-primary hover:border-primary/40 hover:bg-white transition-all duration-300 group" aria-label="WhatsApp">
+                <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" strokeWidth={1.5} />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-secondary/20 flex items-center justify-center text-secondary/60 hover:text-primary hover:border-primary/40 hover:bg-white transition-all duration-300 group" aria-label="YouTube">
+                <YoutubeIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </a>
             </div>
           </div>
@@ -84,12 +114,12 @@ export function Footer() {
         </div>
 
         {/* Middle Section: Refined Links */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 pt-16 border-t border-border/50 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 pt-16 border-t border-border/50 mb-12">
           
           <div className="lg:col-span-1">
-             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">Navigation</h4>
+             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">Indian Packages</h4>
              <ul className="flex flex-col gap-4">
-               {navLinks.map(l => (
+               {indianPackages.map(l => (
                  <li key={l.href}>
                    <Link href={l.href} className="font-sans text-[13px] text-secondary/80 hover:text-primary font-medium transition-colors">
                      {l.label}
@@ -100,9 +130,9 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-1">
-             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">Curated Destinations</h4>
+             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">International Packages</h4>
              <ul className="flex flex-col gap-4">
-               {destinationLinks.map(l => (
+               {internationalPackages.map(l => (
                  <li key={l.href}>
                    <Link href={l.href} className="font-sans text-[13px] text-secondary/80 hover:text-primary font-medium transition-colors">
                      {l.label}
@@ -112,7 +142,20 @@ export function Footer() {
              </ul>
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
+             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">Company</h4>
+             <ul className="flex flex-col gap-4">
+               {companyLinks.map(l => (
+                 <li key={l.href}>
+                   <Link href={l.href} className="font-sans text-[13px] text-secondary/80 hover:text-primary font-medium transition-colors">
+                     {l.label}
+                   </Link>
+                 </li>
+               ))}
+             </ul>
+          </div>
+
+          <div className="lg:col-span-1">
             <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-secondary/50 font-bold mb-6">Headquarters</h4>
             <div className="flex flex-col gap-1">
               <p className="font-sans text-[13px] text-secondary/80 font-medium leading-relaxed max-w-xs">

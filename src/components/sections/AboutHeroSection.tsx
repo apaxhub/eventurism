@@ -2,84 +2,95 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
 export function AboutHeroSection() {
   return (
-    <section className="relative bg-ivory min-h-screen flex items-center pt-24 lg:pt-0">
-      
-      {/* Desktop Background Image (Right Side) */}
-      <div className="hidden lg:block absolute top-0 right-0 w-[60%] h-full">
-        <motion.div 
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="w-full h-full relative"
-        >
-          <Image 
-            src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&q=80" 
-            alt="Travelers exploring a beautiful misty landscape"
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Cinematic Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-ivory via-transparent to-transparent w-32" />
-          <div className="absolute inset-0 bg-secondary/10 mix-blend-multiply" />
-        </motion.div>
-      </div>
-
-      {/* Mobile/Tablet Image */}
-      <div className="block lg:hidden w-full h-[450px] relative">
-        <Image 
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80" 
-          alt="Travelers exploring a beautiful misty landscape"
-          fill
-          className="object-cover rounded-b-[40px] shadow-lg"
-          priority
-        />
-        <div className="absolute inset-0 bg-secondary/10 mix-blend-multiply rounded-b-[40px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full -mt-24 lg:mt-0 pb-20 lg:pb-0">
-        
-        {/* Layered Editorial Text Box */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="w-full lg:w-[55%] xl:w-[50%] bg-white p-8 sm:p-12 lg:p-16 xl:p-20 rounded-[24px] shadow-[0_30px_60px_-15px_rgba(15,23,42,0.12)] border border-border/50 lg:my-32 relative"
-        >
-          <AnimatedSection>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="h-px w-10 bg-primary" />
-              <span className="font-sans text-xs tracking-widest text-primary uppercase font-semibold">
-                Our Philosophy
+    <section className="relative min-h-[80vh] flex items-center bg-ivory overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
+          
+          {/* Left Column: Content & Typography */}
+          <div className="max-w-xl relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <div className="h-px w-12 bg-primary/60" />
+              <span className="font-sans text-xs tracking-[0.2em] text-secondary/80 uppercase font-medium">
+                Our Story
               </span>
-            </div>
-            
-            <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[56px] text-secondary leading-[1.1] mb-8">
-              Curators of <br />
-              <em className="text-primary not-italic">Extraordinary</em> Journeys.
-            </h1>
-            
-            <p className="font-sans text-lg sm:text-xl text-secondary/90 leading-relaxed font-medium mb-6">
-              Since 2011, we haven&apos;t just planned trips; we&apos;ve designed chapters of your life.
-            </p>
-            
-            <p className="font-sans text-secondary/70 leading-relaxed font-light mb-10 text-[15px] sm:text-base">
-              Eventurism was born in Chennai from a simple belief: travel should be an art form. We move beyond generic itineraries and rigid schedules to craft deeply personal, authentic experiences that linger in your memory long after the journey ends.
-            </p>
+            </motion.div>
 
-            <div className="relative pl-6 sm:pl-8 py-2">
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/60 to-primary/10 rounded-full" />
-              <blockquote className="font-display text-xl sm:text-2xl text-secondary italic leading-relaxed text-secondary/90">
-                &ldquo;Our greatest masterpiece is the memory you take home. We measure our success not in miles traveled, but in moments cherished.&rdquo;
-              </blockquote>
-            </div>
-          </AnimatedSection>
-        </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="font-display font-medium text-5xl sm:text-6xl lg:text-[4.5rem] text-secondary leading-[1.1] mb-8"
+            >
+              Travel with <em className="text-primary not-italic font-serif">purpose</em> and passion.
+            </motion.h1>
 
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-lg font-sans text-secondary/80 leading-relaxed mb-6 max-w-md font-light"
+            >
+              Since 2011, we have believed that travel is more than just visiting a destination—it is about the connections you make and the moments that stay with you forever.
+            </motion.p>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-lg font-sans text-secondary/70 leading-relaxed max-w-md font-light"
+            >
+              We craft authentic, thoughtfully designed journeys that allow you to explore the world at your own pace, supported by people who truly care.
+            </motion.p>
+          </div>
+
+          {/* Right Column: Imagery Collage */}
+          <div className="relative h-[450px] sm:h-[600px] w-full mt-12 lg:mt-0">
+            {/* Soft background glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-white/60 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Main Image */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="absolute top-[5%] right-[5%] w-[75%] h-[75%] rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.06)] z-10 border-4 border-ivory/50"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=1200"
+                alt="Travelers exploring a scenic landscape"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+
+            {/* Overlapping Secondary Image */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="absolute bottom-[5%] left-[0%] w-[55%] h-[45%] rounded-3xl overflow-hidden shadow-xl z-20 border-[8px] border-ivory"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=800"
+                alt="Authentic local experience"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </motion.div>
+          </div>
+
+        </div>
       </div>
     </section>
   )

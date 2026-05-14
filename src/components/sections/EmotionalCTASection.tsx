@@ -3,63 +3,72 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, MessageCircle } from 'lucide-react'
 
 export function EmotionalCTASection() {
   return (
-    <section className="relative py-32 lg:py-48 overflow-hidden">
-      {/* Background Image */}
-      <motion.div 
-        initial={{ scale: 1.05 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 2, ease: "easeOut" }}
-        className="absolute inset-0"
-      >
-        <Image 
-          src="https://images.unsplash.com/photo-1490682143684-14369e18dce8?w=2400&q=80" 
-          alt="A tranquil path toward the horizon"
-          fill
-          className="object-cover"
-        />
-        {/* Soft, warm gradient overlay to create a cinematic atmosphere */}
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/40 to-transparent" />
-      </motion.div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-center">
-        <div className="w-full lg:w-[45%]">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="bg-ivory/95 backdrop-blur-md p-10 sm:p-14 lg:p-16 rounded-[32px] shadow-[0_40px_80px_rgba(15,23,42,0.3)] border border-white/20 relative"
-          >
-            {/* Elegant decorative line */}
-            <div className="absolute top-0 left-10 w-16 h-1 bg-primary rounded-b-full" />
-
-            <span className="font-sans text-xs tracking-widest text-primary uppercase font-semibold block mb-4 mt-2">
-              Your Invitation
-            </span>
+    <section className="py-24 sm:py-32 bg-ivory relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative rounded-[2rem] overflow-hidden bg-white shadow-[0_8px_40px_rgba(0,0,0,0.04)] border border-border/40">
+          <div className="grid grid-cols-1 lg:grid-cols-2 items-stretch">
             
-            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-[52px] text-secondary leading-[1.1] mb-6">
-              Let&apos;s Write the <br />
-              <em className="text-primary not-italic">Next Chapter</em> Together.
-            </h2>
-            
-            <p className="font-sans text-secondary/70 text-lg leading-relaxed font-light mb-12">
-              Whether you know exactly where you want to go, or you are simply looking for a spark of inspiration, our travel designers are here to listen. No pressure, no obligations—just a conversation about the art of travel.
-            </p>
+            {/* Text Content */}
+            <div className="p-10 sm:p-16 lg:p-20 flex flex-col justify-center order-2 lg:order-1">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-px w-10 bg-primary/60" />
+                  <span className="font-sans text-xs tracking-[0.2em] text-secondary/80 uppercase font-medium">
+                    Start Your Journey
+                  </span>
+                </div>
+                
+                <h2 className="font-display font-medium text-4xl sm:text-5xl text-secondary leading-[1.15] mb-6">
+                  Let&apos;s bring your travel ideas to life.
+                </h2>
+                
+                <p className="font-sans text-secondary/70 text-lg leading-relaxed font-light mb-10 max-w-md">
+                  Whether you know exactly where you want to go, or just need a little inspiration, our team is here to help you plan a trip that feels perfectly you.
+                </p>
 
-            <Link href="/contact" className="inline-flex items-center gap-5 group">
-              <div className="w-14 h-14 rounded-full border border-secondary/20 flex items-center justify-center bg-white group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(242,100,64,0.2)] transition-all duration-500">
-                <ArrowRight className="w-5 h-5 text-secondary group-hover:text-primary transition-colors duration-500" />
-              </div>
-              <span className="font-display font-bold text-xl text-secondary group-hover:text-primary transition-colors duration-500">
-                Start the Conversation
-              </span>
-            </Link>
-          </motion.div>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <Link 
+                    href="/contact"
+                    className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-white rounded-full px-8 py-4 font-sans font-medium transition-colors duration-300 flex items-center justify-center gap-2"
+                  >
+                    Contact Us
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link 
+                    href="https://wa.me/919999999999"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto bg-transparent border border-border hover:border-primary/30 text-secondary rounded-full px-8 py-4 font-sans font-medium transition-colors duration-300 flex items-center justify-center gap-2 group"
+                  >
+                    <MessageCircle className="w-5 h-5 text-primary transition-transform group-hover:scale-110" />
+                    Chat on WhatsApp
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Image */}
+            <div className="relative h-[350px] sm:h-[450px] lg:h-auto w-full order-1 lg:order-2">
+              <Image 
+                src="https://images.unsplash.com/photo-1490682143684-14369e18dce8?auto=format&fit=crop&q=80&w=1200" 
+                alt="A tranquil path toward the horizon"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-secondary/5" />
+            </div>
+
+          </div>
         </div>
       </div>
     </section>

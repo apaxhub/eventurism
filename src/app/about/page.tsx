@@ -18,11 +18,11 @@ export default function AboutPage() {
     <>
       <AboutHeroSection />
       <OurStorySection />
-      <TravelPhilosophySection />
-      <AboutExperiencesSection />
-      <TheArtisansSection />
-      <MomentsGallerySection />
-      <TravelerStoriesSection />
+      {/* <TravelPhilosophySection /> */}
+      {/* <AboutExperiencesSection /> */}
+      {/* <TheArtisansSection /> */}
+      {/* <MomentsGallerySection /> */}
+      {/* <TravelerStoriesSection /> */}
       <EmotionalCTASection />
     </>
   )
