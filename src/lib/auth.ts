@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
             where: { email: credentials.email.toLowerCase() },
           })
           if (!admin) throw new Error('No account found')
+          console.log("admin: ", admin)
           const valid = await bcrypt.compare(credentials.password, admin.password)
           if (!valid) throw new Error('Invalid password')
           return { id: admin.id, email: admin.email, name: admin.name }

@@ -7,17 +7,23 @@ import { slugify } from '@/lib/utils'
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
-    const category = searchParams.get('category')
+    const typeId = searchParams.get('typeId')
+    const categoryId = searchParams.get('categoryId')
     const featured = searchParams.get('featured')
     const published = searchParams.get('published')
 
     const where: Record<string, unknown> = {}
-    if (category) where.category = category
+    if (typeId) where.typeId = typeId
+    if (categoryId) where.categoryId = categoryId
     if (featured === 'true') where.featured = true
     if (published !== 'false') where.published = true
 
     const packages = await prisma.package.findMany({
       where,
+      include: {
+        type: true,
+        category: true,
+      },
       orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
     })
 
@@ -36,11 +42,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const {
       title, destination, duration, groupSize, priceFrom,
-      category, tag, description, highlights, inclusions,
+      typeId, categoryId, tag, description, highlights, inclusions,
       exclusions, itinerary, thumbnail, images, featured, published,
     } = body
 
-    if (!title || !destination || !priceFrom || !thumbnail) {
+    if (!title || !destination || !priceFrom || !thumbnail || !typeId || !categoryId) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
@@ -64,7 +70,8 @@ export async function POST(req: NextRequest) {
         duration: duration || '',
         groupSize: groupSize || '',
         priceFrom: Number(priceFrom),
-        category: category || 'General',
+        typeId,
+        categoryId,
         tag: tag || null,
         description: description || '',
         highlights: highlights || [],

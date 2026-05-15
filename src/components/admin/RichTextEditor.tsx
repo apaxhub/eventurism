@@ -18,6 +18,7 @@ export function RichTextEditor({ value, onChange, placeholder = 'Write your desc
       StarterKit,
       Placeholder.configure({ placeholder }),
     ],
+    immediatelyRender: false,
     content: value,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())

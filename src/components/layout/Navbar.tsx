@@ -42,6 +42,10 @@ export function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const pathname = usePathname()
 
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login')) {
+    return null
+  }
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll)

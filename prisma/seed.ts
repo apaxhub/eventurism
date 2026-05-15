@@ -1,6 +1,6 @@
-import { prisma } from './prisma'
+import { prisma } from '../src/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { slugify } from './utils'
+import { slugify } from '../src/lib/utils'
 
 const packages = [
   {
@@ -9,7 +9,8 @@ const packages = [
     duration: '3N / 4D',
     groupSize: '2–20 pax',
     priceFrom: 8999,
-    category: 'Hill Station',
+    categoryName: 'Hill Station Escapes',
+    typeName: 'India Holidays',
     tag: 'WEEKEND GETAWAY',
     description: '<p>Escape to the <strong>Queen of Hill Stations</strong> — Ooty. Nestled at 2,240 metres in the Nilgiri mountains, this curated package takes you through misty tea gardens, the iconic Nilgiri Mountain Railway, Botanical Gardens, and Ooty Lake. Our experienced coordinators handle every detail so you can simply breathe, explore, and enjoy.</p><p>Perfect for families, couples, and small groups looking for a refreshing retreat from Chennai\'s heat.</p>',
     highlights: ['Nilgiri Mountain Railway ride', 'Botanical Gardens visit', 'Ooty Lake boating', 'Tea factory tour', 'Doddabetta Peak viewpoint', 'Rose Garden walk'],
@@ -35,7 +36,8 @@ const packages = [
     duration: '5N / 6D',
     groupSize: '2–15 pax',
     priceFrom: 24999,
-    category: 'Beach',
+    categoryName: 'Beach Escapes',
+    typeName: 'India Holidays',
     tag: 'FAMILY FAVOURITE',
     description: '<p>Discover the <strong>jewel of India\'s coastline</strong> — the Andaman Islands. With crystal-clear emerald waters, white sandy beaches, and vibrant coral reefs, this package covers Port Blair\'s historic sites and the pristine beaches of Havelock Island.</p><p>Ideal for families, couples, and beach lovers seeking an unforgettable island experience far from the crowds.</p>',
     highlights: ['Radhanagar Beach (Asia\'s best beach)', 'Cellular Jail light and sound show', 'Snorkelling at Elephant Beach', 'Jolly Buoy Island excursion', 'Glass-bottom boat ride', 'Neil Island day trip'],
@@ -63,7 +65,8 @@ const packages = [
     duration: '4N / 5D',
     groupSize: '2–25 pax',
     priceFrom: 14999,
-    category: 'Nature',
+    categoryName: 'Kerala Escapes',
+    typeName: 'India Holidays',
     tag: 'TRENDING',
     description: '<p>Kerala — <strong>God\'s Own Country</strong> — awaits. This package combines the misty tea gardens of Munnar with the serene backwaters of Alleppey on a traditional houseboat. Experience the magic of Kerala\'s lush green landscape, spice plantations, and tranquil waterways.</p>',
     highlights: ['Houseboat stay on Alleppey backwaters', 'Munnar tea garden walks', 'Mattupetty Dam and Echo Point', 'Cochin Fort walking tour', 'Kathakali cultural performance', 'Spice plantation visit'],
@@ -89,7 +92,8 @@ const packages = [
     duration: '1N / 2D',
     groupSize: '2–30 pax',
     priceFrom: 3499,
-    category: 'Heritage',
+    categoryName: 'Heritage Tours',
+    typeName: 'India Holidays',
     tag: 'QUICK ESCAPE',
     description: '<p>A <strong>perfect weekend escape</strong> from Chennai — Pondicherry\'s French Quarter, serene beaches, and the spiritual calm of Auroville await. Just 3 hours from Chennai, this curated short break is ideal for couples, friends, and small families.</p>',
     highlights: ['French Quarter heritage walk', 'Promenade Beach sunrise', 'Auroville Matrimandir visit', 'Serenity Beach relaxation', 'Local French-Tamil cuisine dinner', 'Rock Beach sunset'],
@@ -111,7 +115,8 @@ const packages = [
     duration: '2N / 3D',
     groupSize: '2–20 pax',
     priceFrom: 6999,
-    category: 'Hill Station',
+    categoryName: 'Hill Station Escapes',
+    typeName: 'India Holidays',
     tag: 'COUPLES SPECIAL',
     description: '<p>Kodaikanal — the <strong>Princess of Hill Stations</strong> — is a world of mist, forests, and a shimmering star-shaped lake. This carefully crafted package lets you explore Kodai at a relaxed pace, taking in its natural wonders and cool highland air.</p>',
     highlights: ['Kodaikanal Lake boating', 'Coakers Walk morning stroll', 'Pillar Rocks viewpoint', 'Silver Cascade Waterfalls', 'Bear Shola Falls', 'Berijam Lake (permit required)'],
@@ -134,7 +139,8 @@ const packages = [
     duration: '0N / 1D',
     groupSize: '2–40 pax',
     priceFrom: 1499,
-    category: 'Heritage',
+    categoryName: 'Heritage Tours',
+    typeName: 'India Holidays',
     tag: 'DAY TRIP',
     description: '<p>A <strong>UNESCO World Heritage Site</strong> just 60km from Chennai — Mahabalipuram\'s 7th-century Pallava rock-cut temples and Shore Temple are an architectural marvel. This guided day tour is perfect for history lovers and families wanting a meaningful one-day excursion.</p>',
     highlights: ['Shore Temple at sunrise', 'Five Rathas (Pancha Rathas)', 'Arjuna\'s Penance rock carving', 'Krishna\'s Butter Ball', 'Mahabalipuram beach', 'Tiger Cave'],
@@ -151,7 +157,7 @@ const packages = [
 
 export async function seedDatabase() {
   try {
-    // Seed admin
+    // 1. Seed admin
     const hashedPassword = await bcrypt.hash('Eventurism@Admin2025', 12)
     await prisma.admin.upsert({
       where: { email: 'admin@eventurism.com' },
@@ -159,14 +165,66 @@ export async function seedDatabase() {
       create: { email: 'admin@eventurism.com', password: hashedPassword, name: 'Eventurism Admin' },
     })
 
-    // Seed packages
-    for (const pkg of packages) {
-      const slug = slugify(pkg.title)
-      await prisma.package.upsert({
+    // 2. Seed Types
+    const indiaType = await prisma.type.upsert({
+      where: { slug: slugify('India Holidays') },
+      update: {},
+      create: { name: 'India Holidays', slug: slugify('India Holidays') },
+    })
+
+    const intlType = await prisma.type.upsert({
+      where: { slug: slugify('International Holidays') },
+      update: {},
+      create: { name: 'International Holidays', slug: slugify('International Holidays') },
+    })
+
+    const typesMap = {
+      'India Holidays': indiaType.id,
+      'International Holidays': intlType.id,
+    }
+
+    // 3. Seed Categories
+    const categoriesData = [
+      { name: 'Hill Station Escapes', typeId: indiaType.id },
+      { name: 'Beach Escapes', typeId: indiaType.id },
+      { name: 'Nature Retreats', typeId: indiaType.id },
+      { name: 'Heritage Tours', typeId: indiaType.id },
+      { name: 'Kerala Escapes', typeId: indiaType.id },
+      { name: 'Bali Tour Packages', typeId: intlType.id },
+    ]
+
+    const categoryMap: Record<string, string> = {}
+    for (const cat of categoriesData) {
+      const slug = slugify(cat.name)
+      const createdCat = await prisma.category.upsert({
         where: { slug },
         update: {},
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        create: { ...pkg, slug, itinerary: pkg.itinerary as any },
+        create: { name: cat.name, slug, typeId: cat.typeId },
+      })
+      categoryMap[cat.name] = createdCat.id
+    }
+
+    // 4. Seed packages
+    for (const pkg of packages) {
+      const slug = slugify(pkg.title)
+      const typeId = typesMap[pkg.typeName as keyof typeof typesMap]
+      const categoryId = categoryMap[pkg.categoryName]
+
+      const { categoryName, typeName, ...pkgData } = pkg
+
+      await prisma.package.upsert({
+        where: { slug },
+        update: {
+          typeId,
+          categoryId
+        },
+        create: { 
+          ...pkgData, 
+          slug, 
+          typeId,
+          categoryId,
+          itinerary: pkgData.itinerary as any 
+        },
       })
     }
 
@@ -176,3 +234,12 @@ export async function seedDatabase() {
     console.error('Seed error:', error)
   }
 }
+
+seedDatabase()
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })

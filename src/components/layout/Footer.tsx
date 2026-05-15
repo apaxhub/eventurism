@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, MessageCircle } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 const indianPackages = [
   { label: 'Kerala Escapes', href: '/tours?destination=kerala' },
@@ -45,6 +48,12 @@ const YoutubeIcon = ({ className }: { className?: string }) => (
 )
 
 export function Footer() {
+  const pathname = usePathname()
+
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login')) {
+    return null
+  }
+
   return (
     <footer className="bg-ivory-dark text-secondary pt-24 pb-8 lg:pt-32 lg:pb-12 border-t border-border/40 relative overflow-hidden">
       

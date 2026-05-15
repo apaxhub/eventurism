@@ -9,6 +9,10 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
       where: {
         OR: [{ id: params.id }, { slug: params.id }],
       },
+      include: {
+        type: true,
+        category: true,
+      },
     })
     if (!pkg) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     return NextResponse.json({ package: pkg })

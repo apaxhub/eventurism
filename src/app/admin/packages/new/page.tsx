@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: 'New Package' }
 
 export default function NewPackagePage() {
   return (
-    <div className="p-6 lg:p-8 pt-20 lg:pt-8 max-w-4xl">
+    <div className="p-6 lg:p-8 pt-20 lg:pt-8">
       <div className="mb-8">
         <Link href="/admin/packages" className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-secondary transition-colors font-mono mb-4">
           <ChevronLeft className="w-4 h-4" /> Back to Packages
