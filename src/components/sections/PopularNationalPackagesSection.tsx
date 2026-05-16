@@ -4,35 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { MapPin, Clock, ArrowRight, MessageCircle } from 'lucide-react'
+import { Package } from '@prisma/client'
 
-const packages = [
-  {
-    id: 'kerala-escape',
-    title: 'Kerala Backwaters & Hills',
-    location: 'Kerala, India',
-    duration: '5 Days / 4 Nights',
-    description: 'Immerse yourself in the misty tea gardens of Munnar and the serene, timeless backwaters of Alleppey.',
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'golden-triangle',
-    title: 'Golden Triangle Heritage',
-    location: 'Delhi, Agra & Jaipur',
-    duration: '6 Days / 5 Nights',
-    description: 'A cultural journey through India\'s most iconic royal heritage sites, bustling bazaars, and majestic monuments.',
-    image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'himalayan-serenity',
-    title: 'Himalayan Serenity',
-    location: 'Shimla & Manali',
-    duration: '7 Days / 6 Nights',
-    description: 'Find peace among the pine forests and snow-capped peaks of the Himalayas. A perfect blend of nature and comfort.',
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80&w=800'
-  }
-]
+interface PopularNationalPackagesSectionProps {
+  packages: Package[]
+}
 
-export function PopularNationalPackagesSection() {
+export function PopularNationalPackagesSection({ packages }: PopularNationalPackagesSectionProps) {
   return (
     <section className="bg-ivory py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,7 +66,7 @@ export function PopularNationalPackagesSection() {
               {/* Image Container */}
               <div className="relative h-72 w-full overflow-hidden">
                 <Image
-                  src={pkg.image}
+                  src={pkg.thumbnail}
                   alt={pkg.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -101,7 +79,7 @@ export function PopularNationalPackagesSection() {
                 <div className="flex items-center gap-4 mb-5 text-sm font-sans text-secondary/60">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-primary" />
-                    <span>{pkg.location}</span>
+                    <span>{pkg.destination}</span>
                   </div>
                   <div className="w-1 h-1 rounded-full bg-border" />
                   <div className="flex items-center gap-2">
@@ -114,28 +92,29 @@ export function PopularNationalPackagesSection() {
                   {pkg.title}
                 </h3>
 
-                <p className="font-sans text-secondary/70 text-base leading-relaxed mb-10 flex-grow font-light">
-                  {pkg.description}
-                </p>
+                <div 
+                  className="font-sans text-secondary/70 text-base leading-relaxed mb-10 flex-grow font-light line-clamp-3"
+                  dangerouslySetInnerHTML={{ __html: pkg.description }}
+                />
 
                 {/* Actions */}
                 <div className="flex flex-col gap-3 mt-auto">
                   <Link
-                    href={`/tours/${pkg.id}`}
+                    href={`/tours/${pkg.slug}`}
                     className="w-full bg-secondary hover:bg-secondary/90 text-white rounded-full py-4 font-sans text-sm font-medium transition-colors duration-300 flex items-center justify-center gap-2"
                   >
                     View Details
                     <ArrowRight className="w-4 h-4" />
                   </Link>
-                  <Link
-                    href={`https://wa.me/919999999999?text=Hi, I'm interested in the ${pkg.title} package.`}
+                  <a
+                    href={`https://wa.me/917449229229?text=Hi, I'm interested in the ${pkg.title} package.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full bg-transparent border border-border hover:border-primary/40 text-secondary rounded-full py-4 font-sans text-sm font-medium transition-colors duration-300 flex items-center justify-center gap-2 group/wa"
                   >
                     <MessageCircle className="w-4 h-4 text-primary transition-transform group-hover/wa:scale-110" />
                     Inquire on WhatsApp
-                  </Link>
+                  </a>
                 </div>
               </div>
             </motion.div>
